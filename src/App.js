@@ -1,25 +1,27 @@
-import logo from './logo.svg';
 import './App.css';
+import {Route} from "react-router-dom";
+import Converter from "./components/Converter";
+import {useDispatch} from "react-redux";
+import React from "react";
+import {fetchRate} from "./components/redux/main";
+import ShowRate from "./components/ShowRate";
+import "./components/Main.css";
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const dispatch = useDispatch();
+
+    React.useEffect(() => {
+        dispatch(fetchRate());
+    }, []);
+
+
+    return (
+        <div className="App">
+            <Route path="/" render={() => <Converter/>} exact/>
+            <Route path="/showrate" render={() => <ShowRate />} exact/>
+        </div>
+    );
 }
 
 export default App;
